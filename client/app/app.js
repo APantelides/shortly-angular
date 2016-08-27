@@ -27,7 +27,17 @@ angular.module('shortly', [
     .when('/links', {
       templateUrl: 'app/links/links.html',
       controller: 'LinksController',
-      authenticate: true
+      authenticate: true, 
+      resolve: {
+        getData: function (Links) {
+          return Links.getAll().then(function(data) {
+            data.sort(function(a, b) {
+              return a.visits < b.visits;
+            });
+            return data;
+          });  
+        }
+      }
     })
     .when('/:route', {
       templateUrl: 'app/links/links.html',
