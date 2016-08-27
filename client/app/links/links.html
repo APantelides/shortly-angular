@@ -1,10 +1,21 @@
+<div class='navigation'>
+  <ul>
+    <li><a href='#/links' class='index'>All Links</a></li>
+    <li><a href='#/shorten' class='create'>Shorten</a></li>
+    <li><a href='' ng-click='logoff()'class='signout'>Signout</a></li>
+  </ul>
+</div>
 <div id='container'>
   <!-- Your html here -->
-  <img src='/redirect_icon.png'/>
-  <div class='info'>
-    <div class='visits'><span class='count'>{{visits}}</span>Visits</div>
-    <div class='title'>{{title}}</div>
-    <div class='original'>{{url}}</div>
-    <a href='{{baseUrl}}/{{code}}'>{{baseUrl}}/{{code}}</a>
+  <h1>Links</h1>
+  <input type='text' ng-model="searchText" placeholder='filter'></div>
+  <div class='link' ng-repeat='link in data.links | filter:searchText:false:title'>
+    <img src='/assets/redirect_icon.png'/>
+    <div class='info'>
+      <div class='visits'><span class='count'>{{data.links[$index].visits}}</span>Visits</div>
+      <div class='title'>{{data.links[$index].title}}</div>
+      <div class='original'>{{data.links[$index].url}}</div>
+      <a href='{{data.links[$index].baseUrl}}/{{data.links[$index].code}}'>{{data.links[$index].baseUrl}}/{{data.links[$index].code}}</a>
+    </div>
   </div>
 </div>
