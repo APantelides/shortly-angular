@@ -5,6 +5,8 @@ angular.module('shortly.auth', [])
 
 .controller('AuthController', function ($scope, $window, $location, Auth) {
   $scope.user = {};
+  $scope.error;
+  $scope.class = '';
 
   $scope.signin = function () {
     Auth.signin($scope.user)
@@ -14,6 +16,12 @@ angular.module('shortly.auth', [])
       })
       .catch(function (error) {
         console.error(error);
+        $scope.class = 'error';
+        if (error.data.error === 'No user') {
+          $scope.error = 'Wrong password!';
+        } else {
+          $scope.error = error.data.error;
+        }
       });
   };
 
@@ -24,7 +32,12 @@ angular.module('shortly.auth', [])
         $location.path('/links');
       })
       .catch(function (error) {
-        console.error(error);
+        $scope.class = 'error';
+        if (error.data.error === 'User already exist!') {
+
+          $scope.error = 'User already exists!';
+        }
+        console.error(error.data.error);
       });
   };
 });
